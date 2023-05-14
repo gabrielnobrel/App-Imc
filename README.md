@@ -22,7 +22,7 @@ Para executar o aplicativo em sua própria máquina, siga estas etapas:
 
 ## Como usar o aplicativo
 
-Ao abrir o aplicativo, você verá uma tela com campos para inserir sua altura e peso. Digite os valores corretos e clique no botão "Calcular IMC". O aplicativo então calculará seu IMC e exibirá o resultado em uma nova tela.
+Ao abrir o aplicativo, você verá uma tela com campos para inserir sua altura e peso. Digite os valores corretos e clique no botão "Calcular IMC". O aplicativo então calculará seu IMC e exibirá o resultado com base em três critérios: magro, ideal e sobrepeso.
 
 ## Contribuição
 
