@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,9 +7,55 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Keyboard,
 } from "react-native";
 
+//IMAGENS
+import idealImage from "./src/assets/ideal.png";
+import magroImage from "./src/assets/magro.png";
+import sobrepesoImage from "./src/assets/sobrepeso.png";
+
 export default function App() {
+  const [weight, setWeight] = useState(""); //peso
+  const [height, setHeight] = useState(""); //altura
+
+  const [resultImc, setResultImc] = useState("...");
+  const [image, setImage] = useState(null);
+
+  function handleSubmit() {
+    Keyboard.dismiss();
+    //Verificação de preenchimento de campos
+    if (
+      isNaN(parseFloat(weight)) ||
+      isNaN(parseFloat(height)) ||
+      weight === null ||
+      height === null
+    ) {
+      setWeight("");
+      setHeight("");
+      alert("Preencha todos os campos");
+      return;
+    }
+
+    //CÁLCULO
+    const transformHeight = height / 100;
+    const calculateImc = weight / (transformHeight * transformHeight);
+
+    //REGRAS IMC
+    if (calculateImc < 18.5) {
+      setResultImc("Magro");
+      setImage(magroImage);
+    } else if (calculateImc >= 18.5 && calculateImc <= 24.9) {
+      setResultImc("Ideal");
+      setImage(idealImage);
+    } else if (calculateImc > 24.9) {
+      setResultImc("Sobrepeso");
+      setImage(sobrepesoImage);
+    }
+    setWeight("");
+    setHeight("");
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar
@@ -29,18 +76,28 @@ export default function App() {
           {/* ÁREA ALTURA */}
           <View style={styles.areaInput}>
             <Text style={styles.inputText}>Peso (kg)</Text>
-            <TextInput style={styles.input} />
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={weight}
+              onChangeText={(text) => setWeight(text)}
+            />
           </View>
 
           {/* ÁREA PESO */}
           <View style={styles.areaInput}>
             <Text style={styles.inputText}>Altura (cm)</Text>
-            <TextInput style={styles.input} />
+            <TextInput
+              style={styles.input}
+              keyboardType="numeric"
+              value={height}
+              onChangeText={(text) => setHeight(text)}
+            />
           </View>
         </View>
 
         {/* BOTÃO */}
-        <TouchableOpacity style={styles.areaButton}>
+        <TouchableOpacity style={styles.areaButton} onPress={handleSubmit}>
           <Text style={styles.textButton}>Calcular</Text>
         </TouchableOpacity>
       </View>
@@ -50,13 +107,13 @@ export default function App() {
         {/* TEXTO */}
         <View style={styles.textArea}>
           <Text style={styles.textResult}>Seu índice de massa corporal é:</Text>
-          <Text style={styles.textImc}>Ideal</Text>
+          <Text style={styles.textImc}>{resultImc}</Text>
         </View>
 
         {/* IMAGEM */}
         <View style={styles.areaImage}>
           <Image
-            source={require("./src/assets/ideal.png")}
+            source={image}
             style={{ height: "100%" }}
             resizeMode="contain"
           />
@@ -118,6 +175,7 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 8,
     marginTop: 7,
+    textAlign: "center",
 
     backgroundColor: "#FFFFFF",
     color: "#1A1A1A",
@@ -145,7 +203,7 @@ const styles = StyleSheet.create({
   bottomArea: {
     flex: 1,
     marginTop: 48,
-    alignItems: "center",
+    width: "100%",
     backgroundColor: "#FFFFFF",
   },
 
