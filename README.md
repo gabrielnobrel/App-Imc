@@ -2,6 +2,11 @@
 
 Este é um aplicativo simples de cálculo de Índice de Massa Corporal (IMC) desenvolvido usando a plataforma Expo. Ele permite que o usuário insira sua altura e peso e calcula seu IMC com base nesses valores.
 
+## Desenvolvido por:
+* Emanuel Beco Bezerra
+* Francisco Gabriel Nobre dos Santos
+* Vitor Leal Pires Santos
+
 ## Tecnologias usadas
 
 Este aplicativo foi desenvolvido usando as seguintes tecnologias:
